@@ -1,7 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Art_Gallery_Project.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<Art_Gallery_ProjectContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Art_Gallery_ProjectContext") ??
+                      throw new InvalidOperationException(
+                          "Connection string 'Art_Gallery_ProjectContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// builder.Services.AddDbContext<ArtGalleryProjectContext>(options =>
+//     options.UseNpgsql(builder.Configuration.GetConnectionString("ArtGalleryProjectContext")));
 
 var app = builder.Build();
 

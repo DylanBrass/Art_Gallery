@@ -6,4 +6,52 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.13" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.13">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGenerators.Mvc" Version="7.0.11" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Exhibition\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Exhibition\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Exhibition\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Exhibition\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Exhibition\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ArtWorks\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ArtWorks\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ArtWorks\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ArtWorks\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ArtWorks\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Artist\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Artist\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Artist\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Artist\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Artist\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ArtWork\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ArtWork\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ArtWork\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ArtWork\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ArtWork\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Exhibition\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Exhibition\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Exhibition\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Exhibition\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Exhibition\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Exhibition\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Exhibition\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Exhibition\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Exhibition\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Exhibition\Index.cshtml" />
+    </ItemGroup>
+
 </Project>
