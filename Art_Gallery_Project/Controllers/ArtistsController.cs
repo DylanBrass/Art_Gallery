@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Art_Gallery_Project.Data;
 using Art_Gallery_Project.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Art_Gallery_Project.Controllers
 {
@@ -55,6 +56,7 @@ namespace Art_Gallery_Project.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Bio")] Artist artist)
         {

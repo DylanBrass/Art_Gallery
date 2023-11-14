@@ -1,12 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Art_Gallery_Project.Data;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Art_Gallery_ProjectContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Art_Gallery_ProjectContext") ??
                       throw new InvalidOperationException(
                           "Connection string 'Art_Gallery_ProjectContext' not found.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<Art_Gallery_ProjectContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -35,4 +39,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
 app.Run();

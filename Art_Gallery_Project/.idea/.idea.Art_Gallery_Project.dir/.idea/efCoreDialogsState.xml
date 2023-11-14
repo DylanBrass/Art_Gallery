@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EfCoreDialogsState">
+    <option name="keyValueStorage">
+      <map>
+        <entry key="Common:e9d3d85f-9d24-9e9a-3849-689b76ad808b:dbContext" value="Art_Gallery_Project.Data.Art_Gallery_ProjectContext" />
+        <entry key="Common:noBuild" value="true" />
+        <entry key="Common:outputFolder" value="Migrations" />
+        <entry key="Common:targetFramework" value="net7.0" />
+      </map>
+    </option>
+  </component>
+</project>
