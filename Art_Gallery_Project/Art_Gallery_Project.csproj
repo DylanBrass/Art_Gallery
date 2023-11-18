@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-    </PropertyGroup>
+      <UserSecretsId>e93ca3d8-0a88-439c-9cd2-e222d31c9850</UserSecretsId>
+  </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
       <DefineConstants>DEBUG;TRACE;</DefineConstants>
@@ -12,6 +13,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.4" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.13" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.13" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
