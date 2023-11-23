@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace Art_Gallery_Project.Models;
 
 public class Artist
@@ -11,4 +13,6 @@ public class Artist
     public string Bio { get; set; }
 
     public List<ArtWork> ArtWorks { get; } = new();
+
+    public IdentityUser User { get; set; }
 }

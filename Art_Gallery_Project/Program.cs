@@ -11,13 +11,36 @@ services.AddDbContext<Art_Gallery_ProjectContext>(options =>
                       throw new InvalidOperationException(
                           "Connection string 'Art_Gallery_ProjectContext' not found.")));
 
-services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+services.AddIdentity<IdentityUser, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+        options.Password.RequireDigit = true;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireUppercase = true;
+    })
+    .AddDefaultTokenProviders()
+    .AddDefaultUI()
     .AddEntityFrameworkStores<Art_Gallery_ProjectContext>();
+
 
 services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
     googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+});
+services.AddHttpContextAccessor();
+services.AddAuthorization(options =>
+{
+    options.AddPolicy("ArtistOnly", policy =>
+    {
+        policy.RequireAssertion(context =>
+        {
+            var loggedInUser =
+                Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(context.User.Identity);
+            var queryId = new HttpContextAccessor().HttpContext.Request.Query["user"];
+            return queryId == loggedInUser;
+        });
+    });
 });
 
 services.AddMemoryCache();
@@ -31,10 +54,7 @@ services.AddSession(options =>
 
 // Add services to the container.
 services.AddControllersWithViews();
-
-// builder.Services.AddDbContext<ArtGalleryProjectContext>(options =>
-//     options.UseNpgsql(builder.Configuration.GetConnectionString("ArtGalleryProjectContext")));
-
+services.AddRazorPages();
 
 var app = builder.Build();
 

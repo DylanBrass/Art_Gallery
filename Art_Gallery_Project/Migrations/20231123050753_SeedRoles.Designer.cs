@@ -3,6 +3,7 @@ using System;
 using Art_Gallery_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Art_Gallery_Project.Migrations
 {
     [DbContext(typeof(Art_Gallery_ProjectContext))]
-    partial class Art_Gallery_ProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20231123050753_SeedRoles")]
+    partial class SeedRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,12 +89,7 @@ namespace Art_Gallery_Project.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Artist");
                 });
@@ -170,28 +168,28 @@ namespace Art_Gallery_Project.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "85f7f81a-d69c-451e-98b3-595544fe9f3f",
+                            Id = "a3e21226-0501-4a76-bcfc-de6bb0cb3368",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9fcddc53-3dc7-4757-8779-fa76b8439b0d",
+                            Id = "6d0e8eea-c6db-408a-8234-6e6691722d3e",
                             ConcurrencyStamp = "2",
                             Name = "Artist",
                             NormalizedName = "ARTIST"
                         },
                         new
                         {
-                            Id = "e4b5feb8-80f2-46ba-b081-e46b088916be",
+                            Id = "ea46261e-6749-43f8-a378-8561f3d56865",
                             ConcurrencyStamp = "3",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "18273e74-df0d-402b-bf9e-0a437957af4c",
+                            Id = "e2a081a7-df82-4481-897d-3602375473fb",
                             ConcurrencyStamp = "4",
                             Name = "Gallery_Owner",
                             NormalizedName = "GALLERY_OWNER"
@@ -373,15 +371,6 @@ namespace Art_Gallery_Project.Migrations
                     b.HasOne("Art_Gallery_Project.Models.Artist", null)
                         .WithMany("ArtWorks")
                         .HasForeignKey("ArtistId");
-                });
-
-            modelBuilder.Entity("Art_Gallery_Project.Models.Artist", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Art_Gallery_Project.Models.ExhibitionArtWorks", b =>

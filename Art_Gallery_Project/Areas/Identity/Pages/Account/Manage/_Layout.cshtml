@@ -1,5 +1,8 @@
-﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+﻿@using System.Security.Claims
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
     {
         Layout = parentLayout.ToString();
     }
@@ -13,14 +16,22 @@
 
 <div>
     <h2>Change your account settings</h2>
-    <hr />
+    <hr/>
     <div class="row">
         <div class="col-md-3">
-            <partial name="_ManageNav" />
+            <partial name="_ManageNav"/>
         </div>
         <div class="col-md-9">
             @RenderBody()
         </div>
+        @if (User.Claims.ToList().First(claim => claim.Type == ClaimTypes.Role).Value == "Artist")
+        {
+            <div>
+                <h1>
+                    <a asp-controller="Artist" asp-action="Details" asp-route-user="@Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity)">Manage your artist account</a>
+                </h1>
+            </div>
+        }
     </div>
 </div>
 

@@ -53,6 +53,11 @@
       <_ContentIncludedByDefault Remove="Views\ArtWork\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Views\ArtWork\Edit.cshtml" />
       <_ContentIncludedByDefault Remove="Views\ArtWork\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Artists\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Artists\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Artists\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Artists\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Artists\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

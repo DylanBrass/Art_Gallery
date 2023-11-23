@@ -3,6 +3,7 @@ using System;
 using Art_Gallery_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Art_Gallery_Project.Migrations
 {
     [DbContext(typeof(Art_Gallery_ProjectContext))]
-    partial class Art_Gallery_ProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20231123054018_AddedAristUser")]
+    partial class AddedAristUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,28 +173,28 @@ namespace Art_Gallery_Project.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "85f7f81a-d69c-451e-98b3-595544fe9f3f",
+                            Id = "47120e7f-889b-4c16-8627-9fee437a9a49",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9fcddc53-3dc7-4757-8779-fa76b8439b0d",
+                            Id = "54c591c0-45dd-44ba-94cc-89e2741c6498",
                             ConcurrencyStamp = "2",
                             Name = "Artist",
                             NormalizedName = "ARTIST"
                         },
                         new
                         {
-                            Id = "e4b5feb8-80f2-46ba-b081-e46b088916be",
+                            Id = "98b02a34-d2ed-4f3b-b0fc-9d57192851be",
                             ConcurrencyStamp = "3",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "18273e74-df0d-402b-bf9e-0a437957af4c",
+                            Id = "dee1ba4c-0236-48f7-bc97-0a8adcf88011",
                             ConcurrencyStamp = "4",
                             Name = "Gallery_Owner",
                             NormalizedName = "GALLERY_OWNER"

@@ -11,6 +11,8 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Art_Gallery_Project.Data;
+using Art_Gallery_Project.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,7 +24,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Art_Gallery_Project.Areas.Identity.Pages.Account
 {
-    public class RegisterModel : PageModel
+    public class RegisterArtistModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
@@ -31,14 +33,16 @@ namespace Art_Gallery_Project.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly Art_Gallery_ProjectContext _context;
 
-        public RegisterModel(
+        public RegisterArtistModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            Art_Gallery_ProjectContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -47,6 +51,7 @@ namespace Art_Gallery_Project.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _context = context;
         }
 
         /// <summary>
@@ -94,6 +99,13 @@ namespace Art_Gallery_Project.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
+            [Required] public string FirstName { get; set; }
+
+            [Required] public string LastName { get; set; }
+
+
+            public string Bio { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -105,13 +117,13 @@ namespace Art_Gallery_Project.Areas.Identity.Pages.Account
         }
 
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync(string returnUrl = null, string role = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null, string role = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -126,11 +138,33 @@ namespace Art_Gallery_Project.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    var defaultRole = await _roleManager.FindByNameAsync("Customer");
-
-                    if (defaultRole != null)
+                    var artist = new Artist()
                     {
-                        await _userManager.AddToRoleAsync(user, defaultRole.Name);
+                        FirstName = Input.FirstName,
+                        LastName = Input.LastName,
+                        Bio = Input.Bio,
+                        User = user
+                    };
+                    _context.Add(artist);
+                    await _context.SaveChangesAsync();
+
+                    if (role != null)
+                    {
+                        var defaultRole = await _roleManager.FindByNameAsync(role);
+
+                        if (defaultRole != null)
+                        {
+                            await _userManager.AddToRoleAsync(user, defaultRole.Name);
+                        }
+                    }
+                    else
+                    {
+                        var defaultRole = await _roleManager.FindByNameAsync("Customer");
+
+                        if (defaultRole != null)
+                        {
+                            await _userManager.AddToRoleAsync(user, defaultRole.Name);
+                        }
                     }
 
                     _logger.LogInformation("User created a new account with password.");
@@ -149,7 +183,7 @@ namespace Art_Gallery_Project.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation",
+                        return RedirectToPage("../RegisterConfirmation",
                             new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
