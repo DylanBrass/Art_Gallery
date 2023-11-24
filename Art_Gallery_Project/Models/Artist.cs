@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Microsoft.AspNetCore.Identity;
 
 namespace Art_Gallery_Project.Models;
@@ -14,5 +15,5 @@ public class Artist
 
     public List<ArtWork> ArtWorks { get; } = new();
 
-    public IdentityUser User { get; set; }
+    public IdentityUser? User { get; set; }
 }

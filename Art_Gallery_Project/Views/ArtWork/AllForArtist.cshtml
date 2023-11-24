@@ -1,0 +1,51 @@
+@using Microsoft.AspNetCore.Identity
+@model List<ArtWork>
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Medium)
+            </th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var artwork in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@artwork.ImageUrl" alt="Image of the ArtWork"/>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => artwork.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => artwork.Medium)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-user="@(UserManager.GetUserId(User))" asp-route-id="@artwork.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-user="@(UserManager.GetUserId(User))" asp-route-id="@artwork.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-user="@(UserManager.GetUserId(User))" asp-route-id="@artwork.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+
+    </table>
+</div>

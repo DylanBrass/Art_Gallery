@@ -1,15 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using Art_Gallery_Project.Data;
+using Art_Gallery_Project.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
+
 services.AddDbContext<Art_Gallery_ProjectContext>(options =>
+{
     options.UseNpgsql(builder.Configuration.GetConnectionString("Art_Gallery_ProjectContext") ??
                       throw new InvalidOperationException(
-                          "Connection string 'Art_Gallery_ProjectContext' not found.")));
+                          "Connection string 'Art_Gallery_ProjectContext' not found."));
+    options.EnableSensitiveDataLogging();
+});
 
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
     {
@@ -28,16 +34,30 @@ services.AddAuthentication().AddGoogle(googleOptions =>
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
     googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
 });
+
 services.AddHttpContextAccessor();
+
 services.AddAuthorization(options =>
 {
     options.AddPolicy("ArtistOnly", policy =>
     {
         policy.RequireAssertion(context =>
         {
+            if (Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(context.User.Identity) == null)
+            {
+                return false;
+            }
+
             var loggedInUser =
-                Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(context.User.Identity);
+                Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(context.User.Identity) ??
+                throw new ArgumentNullException(
+                    "Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(context.User.Identity)");
             var queryId = new HttpContextAccessor().HttpContext.Request.Query["user"];
+            if (queryId.IsNullOrEmpty())
+            {
+                return false;
+            }
+
             return queryId == loggedInUser;
         });
     });

@@ -40,6 +40,67 @@ namespace Art_Gallery_Project.Controllers
         }
 
 
+        [Authorize(Roles = "Admin,Artist", Policy = "ArtistOnly")]
+        public async Task<IActionResult> Edit(string? user)
+        {
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var artist = await _context.Artist
+                .FirstOrDefaultAsync(m => m.User.Id == user);
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            return View(artist);
+        }
+
+        [Authorize(Roles = "Artist")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, string? user,
+            [Bind("Id,FirstName, LastName, Bio, User")]
+            Artist artist)
+        {
+            if (id != artist.Id)
+            {
+                return NotFound();
+            }
+
+
+            artist.User = await _context.Users.FindAsync(user);
+
+            if (artist.User == null)
+            {
+                return NotFound();
+            }
+
+
+            try
+            {
+                artist.User = await _context.Users.FindAsync(artist.User.Id);
+                _context.Update(artist);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ArtistExists(artist.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction("Details", "Artist", new { user = user });
+        }
+
+
         private bool ArtistExists(int id)
         {
             return (_context.Artist?.Any(e => e.Id == id)).GetValueOrDefault();
