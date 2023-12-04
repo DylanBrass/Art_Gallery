@@ -21,16 +21,10 @@ namespace Art_Gallery_Project.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin,Artist", Policy = "ArtistOnly")]
-        public async Task<IActionResult> Details(string? user)
+        public async Task<IActionResult> Details(int id)
         {
-            if (user == null)
-            {
-                return NotFound();
-            }
-
             var artist = await _context.Artist
-                .FirstOrDefaultAsync(m => m.User.Id == user);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (artist == null)
             {
                 return NotFound();
@@ -40,7 +34,7 @@ namespace Art_Gallery_Project.Controllers
         }
 
 
-        [Authorize(Roles = "Admin,Artist", Policy = "ArtistOnly")]
+        [Authorize(Roles = "Artist", Policy = "ArtistOnly")]
         public async Task<IActionResult> Edit(string? user)
         {
             if (user == null)

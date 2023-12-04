@@ -58,6 +58,7 @@
       <_ContentIncludedByDefault Remove="Views\Artists\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Artists\Edit.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Artists\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Exhibitioner\Register.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

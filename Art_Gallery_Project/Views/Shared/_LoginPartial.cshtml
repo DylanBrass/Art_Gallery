@@ -1,6 +1,7 @@
 @using Microsoft.AspNetCore.Identity
 @using NuGet.Versioning
 @using System.Security.Claims
+@using Microsoft.IdentityModel.Tokens
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
@@ -12,18 +13,25 @@
         <li class="nav-item">
             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
         </li>
-        <li class="nav-item">
-            <a asp-controller="Cart" asp-action="Index">Cart</a>
-        </li>
+        @if(User.Claims.ToList().FirstOrDefault(claim => claim.Type == ClaimTypes.Role) != null &&
+            User.Claims.ToList().First(claim => claim.Type == ClaimTypes.Role).Value == "Customer")
+        {
+            <li class="nav-item">
+                <a asp-controller="Cart" asp-action="Index">Cart</a>
+            </li>
+        }
+
         <li class="nav-item">
 
 
-            @if (User.Claims.ToList().First(claim => claim.Type == ClaimTypes.Role).Value == "Artist")
+            @if (User.Claims.ToList().FirstOrDefault(claim => claim.Type == ClaimTypes.Role) != null &&
+                 User.Claims.ToList().First(claim => claim.Type == ClaimTypes.Role).Value == "Artist")
             {
                 <a class="nav-link text-dark" asp-controller="ArtWork" asp-action="Create" asp-route-user="@UserManager.GetUserId(User)" title="Manage">Ready To Post Your Work ?</a>
             }
             else
             {
+                <a class="nav-link text-dark" asp-controller="Exhibition" asp-action="Create" title="Manage">Want to create an exhibition</a>
                 <a class="nav-link text-dark" asp-controller="ArtWork" asp-action="Index" title="Manage">Want to buy Art ?</a>
             }
         </li>

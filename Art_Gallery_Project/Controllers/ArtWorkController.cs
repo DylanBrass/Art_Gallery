@@ -22,6 +22,7 @@ namespace Art_Gallery_Project.Controllers
             return View(await _context.ArtWork.ToListAsync());
         }
 
+
         // GET: ArtWork/Details/5
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id, string? user)
@@ -31,6 +32,7 @@ namespace Art_Gallery_Project.Controllers
                 return NotFound();
             }
 
+
             var artWork = await _context.ArtWork
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (artWork == null)
@@ -38,11 +40,27 @@ namespace Art_Gallery_Project.Controllers
                 return NotFound();
             }
 
+            var artists = _context.Artist.AsNoTracking()
+                .Include(a => a.ArtWorks);
+
+            var artist = artists.FirstOrDefault(a => a.ArtWorks.FirstOrDefault(work => work.Id == id) != null);
+
+            if (artist != null)
+            {
+                ViewData["Artist"] = artist.FirstName + " " + artist.LastName;
+                ViewData["ArtistId"] = artist.Id;
+            }
+            else
+            {
+                ViewData["Artist"] = "Unknown";
+            }
+
+
             return View(artWork);
         }
 
         // GET: ArtWork/Create
-        [Authorize(Roles = "Admin,Artist", Policy = "ArtistOnly")]
+        [Authorize(Roles = "Artist", Policy = "ArtistOnly")]
         public IActionResult Create(string? user)
         {
             return View();
@@ -51,7 +69,7 @@ namespace Art_Gallery_Project.Controllers
         // POST: ArtWork/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,Artist", Policy = "ArtistOnly")]
+        [Authorize(Roles = "Artist", Policy = "ArtistOnly")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(string? user,
@@ -78,7 +96,7 @@ namespace Art_Gallery_Project.Controllers
         }
 
         // GET: ArtWork/Edit/5
-        [Authorize(Roles = "Admin,Artist", Policy = "ArtistOnly")]
+        [Authorize(Roles = "Artist", Policy = "ArtistOnly")]
         public async Task<IActionResult> Edit(int? id, string? user)
         {
             if (id == null || _context.ArtWork == null)
@@ -105,7 +123,7 @@ namespace Art_Gallery_Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Artist", Policy = "ArtistOnly")]
+        [Authorize(Roles = "Artist", Policy = "ArtistOnly")]
         public async Task<IActionResult> Edit(int id, string? user,
             [Bind("Id,Title,Medium,Size,Price,PieceDescription,CompletionDate,ImageUrl")]
             ArtWork artWork)
@@ -146,7 +164,7 @@ namespace Art_Gallery_Project.Controllers
         }
 
         // GET: ArtWork/Delete/5
-        [Authorize(Roles = "Admin,Artist", Policy = "ArtistOnly")]
+        [Authorize(Roles = "Artist", Policy = "ArtistOnly")]
         public async Task<IActionResult> Delete(int? id, string? user)
         {
             if (id == null || _context.ArtWork == null)
@@ -172,7 +190,7 @@ namespace Art_Gallery_Project.Controllers
         // POST: ArtWork/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Artist", Policy = "ArtistOnly")]
+        [Authorize(Roles = "Artist", Policy = "ArtistOnly")]
         public async Task<IActionResult> DeleteConfirmed(int id, string? user)
         {
             if (_context.ArtWork == null)
@@ -195,7 +213,7 @@ namespace Art_Gallery_Project.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Admin,Artist", Policy = "ArtistOnly")]
+        [Authorize(Roles = "Artist", Policy = "ArtistOnly")]
         public async Task<IActionResult> AllForArtist(string? user)
         {
             if (user == null)

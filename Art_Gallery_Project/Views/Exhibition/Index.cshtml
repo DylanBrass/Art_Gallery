@@ -1,3 +1,34 @@
-@model TModel
+@model List<Art_Gallery_Project.Models.DTO.ExhibitionViews>
 
 <h1>Explore Artworks</h1>
+
+@foreach (var views in Model)
+{
+    <div class="card">
+        <h1>
+            @views.exhibition.Title
+
+            @foreach (var floor in views.Floors)
+            {
+                <h2>
+                    @floor.FloorNumber
+                </h2>
+                <div>
+                    @foreach (var artwork in floor.ArtWorks)
+                    {
+                        <div>
+                            <h4>
+                                @artwork.Title
+                            </h4>
+                            <div class="flex-column">
+                                <img src="@artwork.ImageUrl" width="100px" alt="Image of the ArtWork"/>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <br/>
+            }
+        </h1>
+    </div>
+}
