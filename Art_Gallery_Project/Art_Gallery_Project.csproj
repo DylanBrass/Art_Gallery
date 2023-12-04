@@ -78,6 +78,7 @@
       <Folder Include="Areas\Test\Data\" />
       <Folder Include="Areas\Test\Models\" />
       <Folder Include="Areas\Test\Views\" />
+      <Folder Include="Migrations\" />
     </ItemGroup>
 
 </Project>

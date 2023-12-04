@@ -16,4 +16,5 @@ public class Artist
     public List<ArtWork> ArtWorks { get; } = new();
 
     public IdentityUser? User { get; set; }
+
 }

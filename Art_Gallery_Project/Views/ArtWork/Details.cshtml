@@ -23,7 +23,7 @@
             @Html.DisplayNameFor(model => model.Medium)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Medium)
+            @Html.DisplayFor(model => model.Medium.ToString().Replace('_', ' '))
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Size)

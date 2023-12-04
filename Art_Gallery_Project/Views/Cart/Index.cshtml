@@ -1,0 +1,12 @@
+@model Art_Gallery_Project.Models.Cart.Cart
+
+<h1>Cart</h1>
+
+@foreach (var itemInCart in Model.Lines)
+{
+    <h2>@itemInCart.ArtWork.Title</h2>
+    <p>@itemInCart.ArtWork.Price</p>
+    <form asp-action="RemoveFromCart" asp-controller="Cart" asp-route-id="@itemInCart.ArtWork.Id" method="post">
+        <input type="submit" value="Remove from cart" class="btn btn-primary"/>
+    </form>
+}

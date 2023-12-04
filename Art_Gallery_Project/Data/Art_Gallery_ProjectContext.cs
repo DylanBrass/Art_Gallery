@@ -27,7 +27,6 @@ namespace Art_Gallery_Project.Data
 
         public DbSet<Art_Gallery_Project.Models.ArtWork> ArtWork { get; set; } = default!;
 
-        public DbSet<Art_Gallery_Project.Models.Exhibition> Exhibition { get; set; } = default!;
 
         private void SeedRoles(ModelBuilder builder)
         {

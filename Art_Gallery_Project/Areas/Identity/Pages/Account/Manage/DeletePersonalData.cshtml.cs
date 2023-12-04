@@ -1,13 +1,17 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable disable
 
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using Art_Gallery_Project.Data;
+using Art_Gallery_Project.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Art_Gallery_Project.Areas.Identity.Pages.Account.Manage
@@ -17,15 +21,18 @@ namespace Art_Gallery_Project.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly Art_Gallery_ProjectContext _context;
 
         public DeletePersonalDataModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
+            Art_Gallery_ProjectContext context,
             ILogger<DeletePersonalDataModel> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         /// <summary>
@@ -86,6 +93,14 @@ namespace Art_Gallery_Project.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            var artist = await _context.Artist.FirstOrDefaultAsync(m => m.User.Id == user.Id);
+            if (artist != null)
+            {
+                _context.Artist.Remove(artist);
+            }
+
+            {
+            }
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)

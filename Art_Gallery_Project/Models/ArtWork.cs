@@ -6,7 +6,7 @@ public class ArtWork
 
     public string Title { get; set; }
 
-    public List<Mediums> Medium { get; set; }
+    public Mediums Medium { get; set; }
 
     public string Size { get; set; }
 
@@ -18,5 +18,4 @@ public class ArtWork
 
     public string ImageUrl { get; set; }
 
-    public List<ExhibitionArtWorks> ExhibitionArtWorksList { get; } = new();
 }
