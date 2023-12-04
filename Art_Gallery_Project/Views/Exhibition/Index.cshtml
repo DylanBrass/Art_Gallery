@@ -6,22 +6,22 @@
 {
     <div class="card">
         <h1>
-            @views.exhibition.Title
+           @views.exhibition.Title
 
             @foreach (var floor in views.Floors)
             {
                 <h2>
-                    @floor.FloorNumber
+                  Floor Number:  @floor.FloorNumber
                 </h2>
                 <div>
                     @foreach (var artwork in floor.ArtWorks)
                     {
                         <div>
                             <h4>
-                                @artwork.Title
+                               Art Title: @artwork.Title
                             </h4>
                             <div class="flex-column">
-                                <img src="@artwork.ImageUrl" width="100px" alt="Image of the ArtWork"/>
+                                <img src="@artwork.ImageUrl" width="300px" alt="Image of the Art Work"/>
                             </div>
                         </div>
                     }
@@ -31,4 +31,52 @@
             }
         </h1>
     </div>
+
+
+    <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: white;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url("https://arthive.net/res/media/img/hy800/exposition/a35/7538568@2x.jpg");
+    }
+
+    .card {
+        background-color: #fff;
+        border-color: black;
+        border-style: double;
+        border-radius: 10px;
+        border-width: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        padding: 20px;
+        max-width: 600px;
+        width: 100%;
+    }
+
+    h1 {
+        color: white;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        color: #555;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    h4 {
+        color: #777;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    img {
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        max-width: 100%;
+    }
+</style>
 }
