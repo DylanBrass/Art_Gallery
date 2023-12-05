@@ -8,7 +8,8 @@ a.navbar-brand {
 }
 
 a {
-  color: #0077cc;
+  color: #000000;
+
 }
 
 .btn-primary {
@@ -17,9 +18,9 @@ a {
   border-color: #1861ac;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link  {
   color: #fff;
-  background-color: #1b6ec2;
+  background-color: white;
   border-color: #1861ac;
 }
 
@@ -46,3 +47,33 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+
+.navbar {
+  border-bottom: 1px solid #fff;
+}
+
+.navbar-brand {
+  font-size: 1.8rem;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  background-color: #fff;
+}
+
+.navbar-nav .nav-link {
+  font-family: 'Apple Chancery', monospace;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ccc;
+}
+
+
+

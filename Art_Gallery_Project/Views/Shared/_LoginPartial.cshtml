@@ -7,50 +7,99 @@
 @inject UserManager<IdentityUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
 
-<ul class="navbar-nav">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar {
+        background-color: #333;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .navbar li {
+        list-style: none;
+        margin-right: 15px;
+    }
+
+    .navbar li a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    .navbar li a:hover {
+        background-color: #555;
+    }
+
+    .nav-link-btn {
+        background-color: #007bff;
+        border: none;
+        cursor: pointer;
+    }
+
+    .nav-link-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<nav class="navbar">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-        </li>
-        @if(User.Claims.ToList().FirstOrDefault(claim => claim.Type == ClaimTypes.Role) != null &&
-            User.Claims.ToList().First(claim => claim.Type == ClaimTypes.Role).Value == "Customer")
-        {
+        <ul class="nav">
             <li class="nav-item">
-                <a asp-controller="Cart" asp-action="Index">Cart</a>
+                <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">
+                    Hello @UserManager.GetUserName(User)!
+                </a>
             </li>
-        }
-
-        <li class="nav-item">
-
-
-            @if (User.Claims.ToList().FirstOrDefault(claim => claim.Type == ClaimTypes.Role) != null &&
-                 User.Claims.ToList().First(claim => claim.Type == ClaimTypes.Role).Value == "Artist")
+            @if(User.Claims.ToList().FirstOrDefault(claim => claim.Type == ClaimTypes.Role) != null &&
+                User.Claims.ToList().First(claim => claim.Type == ClaimTypes.Role).Value == "Customer")
             {
-                <a class="nav-link text-dark" asp-controller="ArtWork" asp-action="Create" asp-route-user="@UserManager.GetUserId(User)" title="Manage">Ready To Post Your Work ?</a>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Cart" asp-action="Index">Cart</a>
+                </li>
             }
-            else
-            {
-                <a class="nav-link text-dark" asp-controller="Exhibition" asp-action="Create" title="Manage">Want to create an exhibition</a>
-                <a class="nav-link text-dark" asp-controller="ArtWork" asp-action="Index" title="Manage">Want to buy Art ?</a>
-            }
-        </li>
-        <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
-            </form>
-        </li>
+            <li class="nav-item">
+                @if (User.Claims.ToList().FirstOrDefault(claim => claim.Type == ClaimTypes.Role) != null &&
+                     User.Claims.ToList().First(claim => claim.Type == ClaimTypes.Role).Value == "Artist")
+                {
+                    <a class="nav-link" asp-controller="ArtWork" asp-action="Create" asp-route-user="@UserManager.GetUserId(User)">
+                        Ready To Post Your Work?
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link" asp-controller="Exhibition" asp-action="Create">Want to create an exhibition</a>
+                    <a class="nav-link" asp-controller="ArtWork" asp-action="Index">Want to buy Art?</a>
+                }
+            </li>
+            <li class="nav-item">
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" class="nav-link nav-link-btn">Logout</button>
+                </form>
+            </li>
+        </ul>
     }
     else
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Artist/Register">Register as Artist</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register as Customer</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Artist/Register">Register as Artist</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register as Customer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>
+        </ul>
     }
-</ul>
+</nav>

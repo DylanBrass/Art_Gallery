@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
       <UserSecretsId>e93ca3d8-0a88-439c-9cd2-e222d31c9850</UserSecretsId>
+      <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -13,9 +14,10 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.4" />
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.13" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.14" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.13" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
